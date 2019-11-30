@@ -19,7 +19,7 @@ def erro():
 
 
 
-print ('Deseja conectar? (1- sim / 2-nao)\n')
+print ('Deseja conectar? (1- sim / 2-nao)\n') #isso foi só pra 'formalizar' o uso do CONNECT/ACK mesmo, não tinha necessidade
 
 if(input() == '1'):
     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,7 +27,7 @@ if(input() == '1'):
     tcp.sendall(b'CONNECT\n')
 
     if receber(tcp) == b'CONNACK':  
-        print ('Deseja cadastrar em qual Topico?\n')
+        print ('Deseja cadastrar em qual Topico? (Humidade - Temp/C - Temp/F)\n')
         tcp.sendall (b'SUBSCRIBE\n')
         sub_topico = input() + '\n'
         tcp.sendall (sub_topico.encode()) #sendall precisa que seja em bytes, funcao encode resolve isso
@@ -35,10 +35,10 @@ if(input() == '1'):
 
         if receber(tcp) == b'SUBACK':
             print('Cadastrado com sucesso.')
-            if receber(tcp) == b'PUBLISH':
+            while receber(tcp) == b'PUBLISH':
                 pub_topico = receber(tcp) 
                 info = receber(tcp)
-                print("Topico: ",pub_topico,' / Info: ', info)
+                print("Topico: ",pub_topico.decode(),' / Info: ', info.decode())
 
 
 
