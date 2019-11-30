@@ -5,7 +5,6 @@ import time
 HOST = 'localhost'
 PORT = 8080
 
-
 def receber(con):
     mensagem = b''
     while True:
@@ -13,7 +12,6 @@ def receber(con):
         if not buffer or buffer == b'\n': break
         mensagem += buffer
     return mensagem
-
 
 def erro():
     print ('ERROR')
@@ -23,11 +21,8 @@ def publish(topico, info, tcp):
     tcp.sendall( topico + b'\n' )
     tcp.sendall( info + b'\n' )
 
-
-
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcp.connect((HOST,PORT))
-
 
 file = open ('htDHT11.txt')
 i = 0
@@ -38,7 +33,4 @@ for linha in file: #pega a linha inteira ja
     publish(b'Temp/F', s[4].encode(), tcp)
 
     time.sleep(1) #zzzzz
-
-
-
 file.close()

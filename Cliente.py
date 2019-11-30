@@ -5,7 +5,6 @@ import socket
 HOST = 'localhost'
 PORT = 8080
 
-
 def receber(con):
     mensagem = b''
     while True:
@@ -16,8 +15,6 @@ def receber(con):
 
 def erro():
     print ('ERROR')
-
-
 
 print ('Deseja conectar? (1- sim / 2-nao)\n') #isso foi só pra 'formalizar' o uso do CONNECT/ACK mesmo, não tinha necessidade
 
@@ -32,7 +29,6 @@ if(input() == '1'):
         sub_topico = input() + '\n'
         tcp.sendall (sub_topico.encode()) #sendall precisa que seja em bytes, funcao encode resolve isso
 
-
         if receber(tcp) == b'SUBACK':
             print('Cadastrado com sucesso.')
             while receber(tcp) == b'PUBLISH':
@@ -40,14 +36,8 @@ if(input() == '1'):
                 info = receber(tcp)
                 print("Topico: ",pub_topico.decode(),' / Info: ', info.decode())
 
-
-
     else:
         erro()
 
-
-
-
         tcp.close()
-
 print ('Conexão finalizada.\n')
